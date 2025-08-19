@@ -1,0 +1,56 @@
+import { type NextRequest, NextResponse } from "next/server"
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { firstName, lastName, email, company, message } = body
+
+    // Validate required fields
+    if (!firstName || !lastName || !email || !message) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email format" }, { status: 400 })
+    }
+
+    // Here you would typically:
+    // 1. Save to database
+    // 2. Send email notification
+    // 3. Integrate with CRM
+
+    // For now, we'll just log the submission
+    console.log("Contact form submission:", {
+      firstName,
+      lastName,
+      email,
+      company,
+      message,
+      timestamp: new Date().toISOString(),
+    })
+
+    // Simulate email sending (replace with actual email service)
+    // await sendEmail({
+    //   to: 'hello@ferinay.com',
+    //   subject: `New contact form submission from ${firstName} ${lastName}`,
+    //   html: `
+    //     <h2>New Contact Form Submission</h2>
+    //     <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+    //     <p><strong>Email:</strong> ${email}</p>
+    //     <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+    //     <p><strong>Message:</strong></p>
+    //     <p>${message}</p>
+    //   `
+    // })
+
+    return NextResponse.json(
+      { message: "Thank you for your message! We'll get back to you within 24 hours." },
+      { status: 200 },
+    )
+  } catch (error) {
+    console.error("Contact form error:", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+  }
+}
