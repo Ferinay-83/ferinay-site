@@ -341,7 +341,7 @@ export default function HomePage() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-primary" />
-                    <span>info@ferinay.com</span>
+                    <span>info@ferinay.co.za</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="w-5 h-5 text-primary" />
