@@ -2,7 +2,23 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const contentType = request.headers.get("content-type");
+    let body: any;
+
+    if (contentType?.includes("application/json")) {
+      body = await request.json();
+    } else {
+      // Handle FormData
+      const formData = await request.formData();
+      body = {
+        firstName: formData.get("firstName") as string,
+        lastName: formData.get("lastName") as string,
+        email: formData.get("email") as string,
+        company: formData.get("company") as string,
+        message: formData.get("message") as string,
+      };
+    }
+
     const { firstName, lastName, email, company, message } = body;
 
     // Validate required fields
