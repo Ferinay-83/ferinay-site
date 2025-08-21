@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         },
         body: JSON.stringify({
           from: "noreply@mail.ferinay.co.za",
-          to: "info@ferinay.co.za"; "clementmitchell73@gmail.com",
+          to: "info@ferinay.co.za",
           subject: `New contact form submission from ${firstName} ${lastName}`,
           html: `
             <h2>New Contact Form Submission</h2>
