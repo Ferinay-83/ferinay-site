@@ -1,3 +1,7 @@
+"use client";
+
+import type React from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,8 +22,62 @@ import {
   MapPin,
 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          company: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -180,7 +238,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form action="/api/contact" method="POST" className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label
@@ -189,26 +247,50 @@ export default function HomePage() {
                       >
                         First Name
                       </label>
-                      <Input id="firstName" name="firstName" required />
+                      <Input
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        required
+                      />
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="lastName" className="text-sm font-medium">
                         Last Name
                       </label>
-                      <Input id="lastName" name="lastName" required />
+                      <Input
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        required
+                      />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="email" className="text-sm font-medium">
                       Email
                     </label>
-                    <Input id="email" name="email" type="email" required />
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="company" className="text-sm font-medium">
                       Company (Optional)
                     </label>
-                    <Input id="company" name="company" />
+                    <Input
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
+                    />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="message" className="text-sm font-medium">
@@ -219,14 +301,32 @@ export default function HomePage() {
                       name="message"
                       rows={5}
                       placeholder="Tell us about your project..."
+                      value={formData.message}
+                      onChange={handleInputChange}
                       required
                     />
                   </div>
+                  {submitStatus === "success" && (
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-md">
+                      <p className="text-green-800">
+                        Thank you! Your message has been sent successfully.
+                      </p>
+                    </div>
+                  )}
+                  {submitStatus === "error" && (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+                      <p className="text-red-800">
+                        Sorry, there was an error sending your message. Please
+                        try again.
+                      </p>
+                    </div>
+                  )}
                   <Button
                     type="submit"
                     className="w-full hover:scale-105 transition-transform"
+                    disabled={isSubmitting}
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
@@ -241,7 +341,7 @@ export default function HomePage() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-primary" />
-                    <span>info@ferinay.co.za</span>
+                    <span>info@ferinay.com</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="w-5 h-5 text-primary" />
