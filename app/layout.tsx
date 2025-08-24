@@ -17,25 +17,33 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "Ferinay - Professional Web Design & Development",
+  title: "Ferinay | Web Design & Development in South Africa",
   description:
-    "Ferinay offers professional web design, web applications, and hosting services. Transform your digital presence with our expert team.",
-  keywords: "web design, web development, hosting, web applications, professional websites",
+    "Ferinay provides expert web design, development, and hosting solutions tailored for businesses in South Africa. Request a free consultation today.",
+  keywords: "web design, web development, hosting, web applications, professional websites, South Africa",
   authors: [{ name: "Ferinay" }],
   creator: "Ferinay",
   publisher: "Ferinay",
   openGraph: {
-    title: "Ferinay - Professional Web Design & Development",
-    description: "Transform your digital presence with our expert web design, development, and hosting services.",
-    url: "https://ferinay.com",
+    title: "Ferinay | Web Design & Development in South Africa",
+    description: "Professional web design, development, and hosting solutions.",
+    url: "https://www.ferinay.co.za/",
     siteName: "Ferinay",
     type: "website",
-    locale: "en_US",
+    locale: "en_ZA",
+    images: [
+      {
+        url: "/images/preview.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Ferinay Web Design & Development",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ferinay - Professional Web Design & Development",
-    description: "Transform your digital presence with our expert web design, development, and hosting services.",
+    title: "Ferinay | Web Design & Development in South Africa",
+    description: "Professional web design, development, and hosting solutions.",
   },
   robots: {
     index: true,
