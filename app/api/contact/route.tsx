@@ -92,14 +92,14 @@ export async function POST(request: NextRequest) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "noreply@ferinay.co.za",
+            from: "info@mail.ferinay.co.za",
             to: email,
             subject: "Thank you for your message!",
             html: `
             <h2>Thank you for contacting Ferinay!</h2>
             <p>Dear ${firstName},</p>
             <p>Your message has been received.</p>
-            <p>I am currently away from my desk but will get back to you as soon as possible during my operating hours.</p>
+            <p>Thank you for reaching out to us. Your message has been received, and one of our team members will get back to you within the next 24 hours.</p>
             
             <h3>Operating Hours (SAST):</h3>
             <ul>
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
               <li>Saturday & Sunday: Closed</li>
             </ul>
             
-            <p>We appreciate your patience and look forward to speaking with you.</p>
+            <p>We appreciate your patience and look forward to assisting you.</p>
             
             <p>Best regards,<br>
             The Ferinay Team</p>
