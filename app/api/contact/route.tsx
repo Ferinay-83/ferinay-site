@@ -98,8 +98,7 @@ export async function POST(request: NextRequest) {
             html: `
             <h2>Thank you for contacting Ferinay!</h2>
             <p>Dear ${firstName} ${lastName},</p>
-            <p>Your message has been received.</p>
-            <p>Thank you for reaching out to us. Your message has been received, and one of our team members will get back to you within the next 24 hours.</p>
+            <p>Your message has been received. One of our team members will get back to you within the next 24 hours.</p>
             
             <h3>Operating Hours (SAST):</h3>
             <ul>
